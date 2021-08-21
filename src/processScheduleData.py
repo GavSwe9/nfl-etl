@@ -29,6 +29,8 @@ def processScheduleData(scheduleData, season, seasonType, week):
                 cursor.execute(deleteGamesQuery);
                 cursor.executemany(insertGamesQuery, gameRecords);
                 connection.commit();
+            
+            print("Inserting {} Games".format(len(gameRecords)))
     except Error as err:
         print(err);
 
