@@ -1,4 +1,5 @@
 from mysql.connector import connect, Error
+from awsSecrets import getDbPass
 from processScheduledGame import processScheduledGame;
 
 def processScheduleData(scheduleData, season, seasonType, week):
@@ -8,7 +9,7 @@ def processScheduleData(scheduleData, season, seasonType, week):
         with connect(
             host = 'dfs.cxqsjcdo8n1w.us-east-1.rds.amazonaws.com',
             user = 'GavSwe',
-            password = "", #ToDo: Read Secrets
+            password = getDbPass(),
             database = 'NFL'
         ) as connection:
 

@@ -1,4 +1,5 @@
 from mysql.connector import connect, Error
+from awsSecrets import getDbPass
 from nflApiRequest import nflApiRequest
 from processPlay import processPlay
 
@@ -24,12 +25,11 @@ def processGameData(gameData, gameDetailId):
         playRecords.append(playResult["playRecord"]);
         playStatRecords.extend(playResult["playStats"]);
 
-
     try:
         with connect(
             host = 'dfs.cxqsjcdo8n1w.us-east-1.rds.amazonaws.com',
             user = 'GavSwe',
-            password = "", #ToDo: Read Secrets
+            password = getDbPass(),
             database = 'NFL'
         ) as connection:
 
