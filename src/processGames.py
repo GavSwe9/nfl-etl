@@ -15,7 +15,15 @@ def processGames(gameDetailIds):
 def processGameData(gameData, gameDetailId):
     plays = gameData["data"]["viewer"]["gameDetail"]["plays"];
 
-    playRecords = [processPlay(playData, gameDetailId) for playData in plays if playData["clockTime"] != ""];
+    playResults = [processPlay(playData, gameDetailId) for playData in plays if playData["clockTime"] != ""];
+
+    playRecords = [];
+    playStatRecords = [];
+
+    for playResult in playResults:
+        playRecords.append(playResult["playRecord"]);
+        playStatRecords.extend(playResult["playStats"]);
+
 
     try:
         with connect(
@@ -30,6 +38,11 @@ def processGameData(gameData, gameDetailId):
                 WHERE P.GameDetailId = "{}"
             """.format(gameDetailId);
 
+            deletePlayStatsQuery = """
+                DELETE FROM NFL.PlayStats PS
+                WHERE PS.GameDetailId = "{}"
+            """.format(gameDetailId);
+
             insertPlaysQuery = """
                 INSERT INTO NFL.Plays
                 (GameDetailId, PlayId, Quarter, ClockTime, Down, YardsToGo, GoalToGo, NextPlayIsGoalToGo, YardLine, PrePlayByPlay, 
@@ -38,11 +51,31 @@ def processGameData(gameData, gameDetailId):
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """;
 
+            insertPlayStatsQuery = """
+                INSERT INTO NFL.PlayStats
+                (`GameDetailId`,`PlayId`,`StatId`,`Yards`,`PlayerName`,`PlayerId`,`TeamAbv`)
+                VALUES(%s, %s, %s, %s, %s, %s, %s)
+            """;
+
             with connection.cursor() as cursor:
                 cursor.execute(deletePlaysQuery);
                 cursor.executemany(insertPlaysQuery, playRecords);
+                cursor.execute(deletePlayStatsQuery);
+                cursor.executemany(insertPlayStatsQuery, playStatRecords);
                 connection.commit();
             
-            print("{} - Inserting {} Plays".format(gameDetailId, len(playRecords)))
+            print(gameDetailId);
+            print("  Inserting {} Plays".format(len(playRecords)));
+            print("  Inserting {} PlayStats".format(len(playStatRecords)));
     except Error as err:
         print(err);
+
+
+x = {
+    'playRecord': ('10160000-0581-9643-0ea9-8e4c586fc048', 39, 1, '15:00', 0, 0, False, False, 'BAL 35', 'BAL  KO  BAL 35', 'KICK_OFF', 'BAL', False, '9-J.Tucker kicks 65 yards from BAL 35 to end zone, Touchback.', 40, False, None, None, True, 9, 3, 1, '2:04', '20:25:25'), 
+    'playStats': [
+        ('10160000-0581-9643-0ea9-8e4c586fc048', 39, 410, 66, 'J.Tucker', '32013030-2d30-3032-3935-39371b9a6ac1', 'BAL'), 
+        ('10160000-0581-9643-0ea9-8e4c586fc048', 39, 44, 65, 'J.Tucker', '32013030-2d30-3032-3935-39371b9a6ac1', 'BAL'), 
+        ('10160000-0581-9643-0ea9-8e4c586fc048', 39, 51, 0, None, None, 'HOU')
+    ]
+}

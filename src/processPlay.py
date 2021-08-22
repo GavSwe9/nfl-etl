@@ -27,4 +27,22 @@ def processPlay(playData, gameDetailId):
         playData["timeOfDay"]
     )
 
-    return playRecord
+    playStats = [processPlayStat(playStat, gameDetailId, playData["playId"]) for playStat in playData["playStats"]]
+
+    return {
+        "playRecord": playRecord,
+        "playStats": playStats
+    }
+
+def processPlayStat(playStat, gameDetailId, playId):
+    playStatRecord = (
+        gameDetailId,
+        playId,
+        playStat["statId"],
+        playStat["yards"],
+        playStat["playerName"],
+        playStat["gsisPlayer"]["id"] if playStat["gsisPlayer"] != None else None,
+        playStat["team"]["abbreviation"]
+    )
+
+    return playStatRecord;
