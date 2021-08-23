@@ -1,6 +1,3 @@
-# Use this code snippet in your app.
-# If you need more information about configurations or implementing the sample code, visit the AWS docs:   
-# https://aws.amazon.com/developers/getting-started/python/
 
 import boto3
 import base64
@@ -12,7 +9,6 @@ def getSecret():
     secret_name = "farm/mysql"
     region_name = "us-east-1"
 
-    # Create a Secrets Manager client
     session = boto3.session.Session()
     client = session.client(
         service_name='secretsmanager',
@@ -25,9 +21,8 @@ def getSecret():
         )
     except ClientError as e:
         print(e);
+        return None;
     else:
-        # Decrypts secret using the associated KMS CMK.
-        # Depending on whether the secret is a string or binary, one of these fields will be populated.
         if 'SecretString' in get_secret_value_response:
             secret = get_secret_value_response['SecretString']
             return secret;

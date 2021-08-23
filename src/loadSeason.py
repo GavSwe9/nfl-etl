@@ -9,8 +9,10 @@ def loadSeason(season, seasonType):
 
     for i in range(1, lastWeek[seasonType]+1): loadWeek(season, seasonType, i);
 
-# loadSeason(2020, "PRE");
-# loadSeason(2020, "REG");
-# loadSeason(2020, "POST");
+# for i in range(2017,2020):
+#     print(i);
+#     loadSeason(i, "PRE");
+#     loadSeason(i, "REG");
+#     loadSeason(i, "POST");
 
-loadWeek(2020, 'REG', 2);
+loadWeek(2021, 'PRE', 1);
