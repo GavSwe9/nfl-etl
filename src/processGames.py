@@ -49,7 +49,7 @@ def processGameData(gameData, gameDetailId, cursor):
 
         insertPlayStatsQuery = """
             INSERT INTO NFL.PlayStats
-            (`GameDetailId`,`PlayId`,`StatId`,`Yards`,`PlayerName`,`PlayerId`,`TeamAbv`)
+            (`GameDetailId`,`PlayId`,`StatId`,`Yards`,`PlayerName`,`PlayerGsisId`,`TeamAbv`)
             VALUES(%s, %s, %s, %s, %s, %s, %s)
         """;
 

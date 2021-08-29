@@ -21,7 +21,7 @@ def loadWeek(season, seasonType, week):
 
     if (response["status"] == 200):
         gameDetailIds = processScheduleData(response["results"], season, seasonType, week, cursor);
-        processGames(gameDetailIds, cursor);
+        # processGames(gameDetailIds, cursor);
     else:
         print("Bad response: ", response["status"]);
     

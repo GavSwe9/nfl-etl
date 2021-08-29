@@ -15,8 +15,8 @@ def processScheduleData(scheduleData, season, seasonType, week, cursor):
 
         insertGamesQuery = """
             INSERT INTO NFL.Games
-            (GameId, HomeTeamAbv, AwayTeamAbv, Season, SeasonType, Week, GsisId, EliasId, GameDetailId, SlugId)
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (GameId, HomeTeamAbv, AwayTeamAbv, Season, SeasonType, Week, StartDateTime, GsisId, EliasId, GameDetailId, SlugId)
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """;
 
         cursor.execute(deleteGamesQuery);
