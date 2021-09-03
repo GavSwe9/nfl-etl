@@ -5,6 +5,7 @@ from mysql.connector import connect, Error
 from awsSecrets import getDbPass
 
 def loadWeek(season, seasonType, week):
+    # Create one connection for all events of each week 
     connection = connect(
         host = 'dfs.cxqsjcdo8n1w.us-east-1.rds.amazonaws.com',
         user = 'GavSwe',
@@ -21,7 +22,7 @@ def loadWeek(season, seasonType, week):
 
     if (response["status"] == 200):
         gameDetailIds = processScheduleData(response["results"], season, seasonType, week, cursor);
-        # processGames(gameDetailIds, cursor);
+        processGames(gameDetailIds, cursor);
     else:
         print("Bad response: ", response["status"]);
     

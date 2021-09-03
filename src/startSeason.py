@@ -15,4 +15,4 @@ def loadSeason(season, seasonType):
 #     loadSeason(i, "REG");
 #     loadSeason(i, "POST");
 
-loadWeek(2021, 'PRE', 2);
+loadWeek(2021, 'PRE', 3);

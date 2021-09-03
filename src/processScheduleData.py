@@ -26,4 +26,18 @@ def processScheduleData(scheduleData, season, seasonType, week, cursor):
     except Error as err:
         print(err);
 
-    return [gameRecord[8] for gameRecord in gameRecords];
+    return [gameRecord[9] for gameRecord in gameRecords];
+
+# (
+#     '560adce1-ca11-11eb-9c3d-03171cab2fd6', 
+#     'DET', 
+#     'IND', 
+#     2021, 
+#     'PRE', 
+#     3, 
+#     '2021-08-27T23:00:00Z', 
+#     '58820', 
+#     '2021082751', 
+#     '10160000-0588-20c0-24fd-4e5a3c524fe9', 
+#     'colts-at-lions-2021-pre-3'
+# )
